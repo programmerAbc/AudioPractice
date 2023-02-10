@@ -14,4 +14,4 @@ mySliderState.avgVolume = if (playerState == PLAYER_STATE_PLAYING) {
 }
 ```
 
-![](docs/example.gif)
+![](doc/example.gif)
