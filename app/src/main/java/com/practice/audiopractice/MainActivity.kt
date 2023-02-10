@@ -558,7 +558,7 @@ fun MySlider(
         Log.e("TAG", "ABSlider: canvas width $canvasWidth height $canvasHeight")
         val ranbow = ImageBitmap.imageResource(id = R.drawable.ic_rainbow)
         val ranbowSize =
-            IntSize(thumbSize.width, (thumb.height / 6f).toInt())
+            IntSize(thumbSize.width, (thumbSize.height * 0.95f).toInt())
         val star1 = ImageBitmap.imageResource(id = R.drawable.ic_star1)
         val star2 = ImageBitmap.imageResource(id = R.drawable.ic_star2)
         val star3 = ImageBitmap.imageResource(id = R.drawable.ic_star3)
