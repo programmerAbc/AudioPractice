@@ -14,9 +14,4 @@ mySliderState.avgVolume = if (playerState == PLAYER_STATE_PLAYING) {
 }
 ```
 
-<p align="center">
-<video width="540" height="960" controls>
-  <source src="doc/example.mp4" type="video/mp4">
-</video>
-</p>
-
+![](docs/example.gif)
