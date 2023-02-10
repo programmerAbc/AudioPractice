@@ -97,7 +97,6 @@ fun App() {
         mutableStateOf<ExoPlayer?>(null)
     }
     var duration by remember(context) { mutableStateOf(0L) }
-    var position by remember(context) { mutableStateOf(0f) }
     val mySliderState = remember(context) { MySliderState() }
     val dataflow = remember(context) {
         MutableSharedFlow<FFTDataPack>(
@@ -174,7 +173,7 @@ fun App() {
                     }
                     Log.e("TAG", "App: currentAverage$currentAverage")
                     mySliderState.avgVolume = if (playerState == PLAYER_STATE_PLAYING) {
-                        (currentAverage / 1000f).let { if (it >= 1f) 1f else if (it <= 0f) 0f else it }
+                        (currentAverage / 2000f).let { if (it >= 1f) 1f else if (it <= 0f) 0f else it }
                     } else {
                         0f
                     }
@@ -291,7 +290,7 @@ fun App() {
     }
     val elapsed by remember(context) {
         derivedStateOf {
-            (position * duration).toLong().let { ms -> ms - ms % 1000 }
+            (mySliderState.position * duration).toLong().let { ms -> ms - ms % 1000 }
         }
     }
     when (playerState) {
@@ -326,7 +325,7 @@ fun App() {
                         withContext(Dispatchers.Main) {
                             if (!mySliderState.userOperating) {
                                 kotlin.runCatching {
-                                    position =
+                                    mySliderState.position =
                                         exoPlayer!!.contentPosition.toFloat() / exoPlayer!!.duration
                                     duration = exoPlayer!!.duration
                                 }
@@ -344,7 +343,8 @@ fun App() {
 
             Box(modifier = Modifier.fillMaxSize()) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().height(40.dp).background(color=Color(0xff003265))
+                    modifier = Modifier.fillMaxWidth().height(40.dp)
+                        .background(color = Color(0xff003265))
                         .align(Alignment.Center)
                 ) {
                     Box(modifier = Modifier.size(40.dp).clickable {
@@ -660,36 +660,56 @@ fun MySlider(
 
             when ((state.frameCount / 10) % 3) {
                 0L -> {
-                    drawImage(star3, dstOffset = IntOffset((this.size.width/2f).toInt(),
-                        (this.size.height/3f).toInt()
-                    ), dstSize = IntSize(30, 30))
+                    drawImage(
+                        star3, dstOffset = IntOffset(
+                            (this.size.width / 2f).toInt(),
+                            (this.size.height / 3f).toInt()
+                        ), dstSize = IntSize(30, 30)
+                    )
                 }
                 1L -> {
-                    drawImage(star2, dstOffset = IntOffset((this.size.width/2f).toInt(),
-                        (this.size.height/3f).toInt()), dstSize = IntSize(30, 30))
+                    drawImage(
+                        star2, dstOffset = IntOffset(
+                            (this.size.width / 2f).toInt(),
+                            (this.size.height / 3f).toInt()
+                        ), dstSize = IntSize(30, 30)
+                    )
                 }
                 2L -> {
-                    drawImage(star1, dstOffset = IntOffset((this.size.width/2f).toInt(),
-                        (this.size.height/3f).toInt()), dstSize = IntSize(30, 30))
+                    drawImage(
+                        star1, dstOffset = IntOffset(
+                            (this.size.width / 2f).toInt(),
+                            (this.size.height / 3f).toInt()
+                        ), dstSize = IntSize(30, 30)
+                    )
                 }
             }
 
 
             when ((state.frameCount / 10) % 3) {
                 0L -> {
-                    drawImage(star2, dstOffset = IntOffset((this.size.width*0.9f).toInt(),
-                        (this.size.height*0.5f).toInt()
-                    ), dstSize = IntSize(30, 30))
+                    drawImage(
+                        star2, dstOffset = IntOffset(
+                            (this.size.width * 0.9f).toInt(),
+                            (this.size.height * 0.5f).toInt()
+                        ), dstSize = IntSize(30, 30)
+                    )
                 }
                 1L -> {
-                    drawImage(star3, dstOffset = IntOffset((this.size.width*0.9f).toInt(),
-                        (this.size.height*0.5f).toInt()
-                    ), dstSize = IntSize(30, 30))
+                    drawImage(
+                        star3, dstOffset = IntOffset(
+                            (this.size.width * 0.9f).toInt(),
+                            (this.size.height * 0.5f).toInt()
+                        ), dstSize = IntSize(30, 30)
+                    )
                 }
                 2L -> {
-                    drawImage(star1, dstOffset = IntOffset((this.size.width*0.9f).toInt(),
-                        (this.size.height*0.5f).toInt()
-                    ), dstSize = IntSize(30, 30))
+                    drawImage(
+                        star1, dstOffset = IntOffset(
+                            (this.size.width * 0.9f).toInt(),
+                            (this.size.height * 0.5f).toInt()
+                        ), dstSize = IntSize(30, 30)
+                    )
                 }
             }
 
